@@ -7,9 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Movie {`
-  id String @id @default(uuid())
-  title String 
-  createdAt DateTime @default(now())
-  updateAt DateTime @default(now())
+model Movie {
+  id               String             @id @default(uuid())
+  title            String
+  createdAt        DateTime           @default(now())
+  updateAt         DateTime           @default(now())
+  movieVoteOptions movieVoteOptions[]
+}
+
+model movieVoteOptions {
+  id    String @id @default(uuid())
+  title String
+  movieId String
+  
+  Movie Movie @relation(fields: [movieId], references: [id])
+
+  
 }
