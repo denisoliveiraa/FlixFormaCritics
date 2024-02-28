@@ -12,15 +12,13 @@ model Movie {
   title            String
   createdAt        DateTime           @default(now())
   updateAt         DateTime           @default(now())
-  movieVoteOptions movieVoteOptions[]
+  movieVoteOptions MovieVoteOption[]
 }
 
-model movieVoteOptions {
-  id    String @id @default(uuid())
-  title String
+model MovieVoteOption {
+  id      String @id @default(uuid())
+  title   String
   movieId String
-  
-  Movie Movie @relation(fields: [movieId], references: [id])
 
-  
+  Movie Movie @relation(fields: [movieId], references: [id])
 }
