@@ -27,12 +27,6 @@ export async function createMovie(app: FastifyInstance){
       }
     })
   
-    await prisma.movieVoteOption.createMany({
-      data: movieOptionsVote.map(option => {
-        return {title: option, movieId: movie.id}
-      })
-    })
-  
     return reply.status(201).send({movieId: movie.id})
   })
 
