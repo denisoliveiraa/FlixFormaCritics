@@ -8,11 +8,12 @@ datasource db {
 }
 
 model Movie {
-  id               String             @id @default(uuid())
+  id               String            @id @default(uuid())
   title            String
-  createdAt        DateTime           @default(now())
-  updateAt         DateTime           @default(now())
+  createdAt        DateTime          @default(now())
+  updateAt         DateTime          @default(now())
   movieVoteOptions MovieVoteOption[]
+  Vote             Vote[]
 }
 
 model MovieVoteOption {
@@ -20,5 +21,19 @@ model MovieVoteOption {
   title   String
   movieId String
 
-  Movie Movie @relation(fields: [movieId], references: [id])
+  Movie Movie  @relation(fields: [movieId], references: [id])
+  Vote  Vote[]
+}
+
+model Vote {
+  id                Int      @id @default(autoincrement())
+  sessionId         String
+  movieVoteOptionId String
+  movieId           String
+  createdAt         DateTime @default(now())
+
+  movieOption MovieVoteOption @relation(fields: [movieVoteOptionId], references: [id])
+  movieVote   Movie           @relation(fields: [movieId], references: [id])
+
+  @@unique([movieVoteOptionId, movieId])
 }
